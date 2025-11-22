@@ -1,7 +1,9 @@
 name: Trivy Scan
+
 on:
   push:
     branches: [ main ]
+
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -12,7 +14,7 @@ jobs:
     - name: Install Trivy
       run: |
         sudo apt-get install wget -y
-        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.67.2_Linux-64bit.deb
+        wget https://github.com/aquasecurity/trivy/releases/trivy_Linux-64bit.deb
         sudo dpkg -i trivy_0.67.2_Linux-64bit.deb
 
     - name: Build Docker Image
@@ -20,3 +22,4 @@ jobs:
 
     - name: Run Trivy Scan (Security Gate)
       run: trivy image --exit-code 1 --severity HIGH,CRITICAL devsecops-scan
+
